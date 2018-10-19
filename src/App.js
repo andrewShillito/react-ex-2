@@ -97,18 +97,46 @@ const movies = {
   },
 };
 
-class App extends Component {
-  render() {
+class App extends React.Component {
+  render () {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">ReactND - Coding Practice</h1>
-        </header>
-        <h2>How Popular is Your Favorite Movie?</h2>
+      <List users={users} movies={movies} profiles={profiles}/>
+    )
+  } 
+}
+
+class List extends React.Component {
+  render() {
+    const arr = [];
+    for (let key in this.props.movies) {
+      movieFans = [];
+      arr[parseInt(key)-1] = {movieFans: [], movieName: this.props.movies[key].name};
+      for (let i = 0; i<this.props.profiles.length; i++){
+        if (this.props.profiles[i].favoriteMovieID === key) {
+          arr[parseInt(key)-1].movieFans.push(this.props.users[this.props.profiles[i].userID].name);
+        }
+      }
+    }  
+    return (
+      <div>
+        <h2></h2>
+        {arr.map((data) => {
+          if (data.movieFans.length) {
+            return (
+              <div>
+                <p>Liked By:</p>
+                <ul>
+                  {data.movieFans.map((fan) => <li>{fan}</li>)}
+                </ul>
+              </div>
+            )
+          }
+        })}
       </div>
-    );
+    )
   }
 }
+
+ReactDOM.render(<App />, document.querySelector("#root"));
 
 export default App;

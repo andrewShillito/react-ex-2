@@ -119,15 +119,22 @@ class List extends React.Component {
     }  
     return (
       <div>
-        <h2></h2>
         {arr.map((data) => {
           if (data.movieFans.length) {
             return (
               <div>
+                <h2>{data.movieName}</h2>
                 <p>Liked By:</p>
                 <ul>
                   {data.movieFans.map((fan) => <li>{fan}</li>)}
                 </ul>
+              </div>
+            )
+          } else {
+            return (
+              <div>
+                <h2>{data.movieName}</h2>
+                <p>None of the current users liked this movie</p>
               </div>
             )
           }
@@ -136,6 +143,7 @@ class List extends React.Component {
     )
   }
 }
+
 
 ReactDOM.render(<App />, document.querySelector("#root"));
 
